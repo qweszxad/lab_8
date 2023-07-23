@@ -30,13 +30,11 @@ class Position(BaseMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
 
-
 class Division(BaseMixin):
     __tablename__ = "FVA_divisions"
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
-
 
 class Job(BaseMixin):
     __tablename__ = "FVA_jobs"
@@ -50,12 +48,9 @@ class Job(BaseMixin):
 
 db.create_all()
 
-
 bp = Blueprint('bp', __name__)
 
-
 @bp.route('/')
-
 
 @bp.route('/employees', methods=['GET'])
 def get_employees_list():
@@ -69,7 +64,6 @@ def get_employees_list():
             employees_query = employees_query.filter(Job.date_of_employment > request.args.get('employment_after_date'))
         employees = employees_query.all()
         return dict(employees)
-
 
 @bp.route('/employee/add', methods=['POST'])
 def add_employee():
@@ -87,7 +81,6 @@ def add_employee():
     except Exception as ex:
         print("Error" + str(ex))
 
-
 @bp.route('/employee/delete', methods=['DELETE'])
 def delete_employee():
     employee = Employee.query.get(request.args.get('id'))
@@ -97,7 +90,6 @@ def delete_employee():
         db.session.delete(employee)
         db.session.commit()
         return 'successfully deleted'
-
 
 @bp.route('/employee/edit', methods=['PUT'])
 def edit_employee():
@@ -109,7 +101,6 @@ def edit_employee():
         db.session.add(employee)
         db.session.commit()
         return dict(employee)
-
 
 @bp.route('/employee/get', methods=['GET'])
 def get_employee():
@@ -126,7 +117,6 @@ def get_employee():
         )
         return dict(employee)
 
-
 @bp.route('/position/add', methods=['POST'])
 def add_position():
     position_data = {
@@ -140,7 +130,6 @@ def add_position():
     except Exception as ex:
         print("Error" + str(ex))
 
-
 @bp.route('/position/delete', methods=['DELETE'])
 def delete_position():
     position = Position.query.get(request.args.get('id'))
@@ -151,7 +140,6 @@ def delete_position():
         db.session.commit()
         return 'successfully deleted'
 
-
 @bp.route('/position/get', methods=['GET'])
 def get_position():
     position = Position.query.get(request.args.get('id'))
@@ -160,7 +148,6 @@ def get_position():
     else:
         print("Position title: ", position.title)
     return dict(position)
-
 
 @bp.route('/division/add', methods=['ADD'])
 def add_division():
@@ -175,7 +162,6 @@ def add_division():
     except Exception as ex:
         print("Error" + str(ex))
 
-
 @bp.route('/division/delete', methods=['DELETE'])
 def delete_division():
     division = Division.query.get(request.args.get('id'))
@@ -186,7 +172,6 @@ def delete_division():
         db.session.commit()
         return 'successfully deleted'
 
-
 @bp.route('/division/get', methods=['GET'])
 def get_division():
     division = Division.query.get(request.args.get('id'))
@@ -195,7 +180,6 @@ def get_division():
     else:
         print("Division title: ", division.title)
     return dict(division)
-
 
 @bp.route('/employment', methods=['POST'])
 def employment():
@@ -216,7 +200,6 @@ def employment():
         db.session.add(new_employment)
         db.session.commit()
         return new_employment
-
 
 @bp.route('/dismissal', methods=['PUT'])
 def dismissal():
